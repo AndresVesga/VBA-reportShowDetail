@@ -1,0 +1,34 @@
+Sub ReporteShowDetail()
+TD = "TD"
+
+ThisWorkbook.Application.ScreenUpdating = False
+ThisWorkbook.Application.DisplayAlerts = False
+
+preguntaReporte = MsgBox("¿Está seguro que quiere generar un reporte?", vbInformation + vbYesNo, "UMB")
+
+posicionInicial = Sheets("TD").Range("B4")
+ufila = Sheets("TD").Range("A" & Rows.Count).End(xlUp).Row - 1
+
+'columnInforme = InputBox("ingrese número Columna", "UMB", 3)
+
+If preguntaReporte = vbYes Then
+On Error Resume Next
+  Sheets(TD).Activate
+    For i = 4 To ufila
+        On Error GoTo Err:
+        ActiveWorkbook.Sheets(TD).Activate
+        Cells(i, 3).Select
+        nombreHoja = ActiveCell.Offset(0, -1)
+        Selection.ShowDetail = True
+        ActiveSheet.Name = nombreHoja
+    
+    'ActiveWorkbook.Sheets(TD).Activate
+
+    Next i
+Err:
+    Else
+End If
+
+ThisWorkbook.Application.ScreenUpdating = True
+ThisWorkbook.Application.DisplayAlerts = True
+End Sub
